@@ -267,8 +267,8 @@ public class Menu {
 
                 case 2:
                     //exclusao
-                    System.out.println("Digite o título da mídia que deseja excluir: ");
-                    midia = locadora.consultaTituloMidia(in.nextLine());
+                    System.out.println("Digite o código da mídia que deseja excluir: ");
+                    midia = locadora.consultaCodigoMidia(in.nextInt());
 
                     //limpar buffer
                     in.nextLine();
@@ -294,8 +294,8 @@ public class Menu {
                     if(locadora.getMidias().isEmpty()){
                         System.out.println("Não há mídias cadastradas");
                     } else{
-                        System.out.println("Digite o título da mídia que deseja consultar: ");
-                        midia = locadora.consultaTituloMidia(in.nextLine());
+                        System.out.println("Digite o código da mídia que deseja consultar: ");
+                        midia = locadora.consultaCodigoMidia(in.nextInt());
 
                         if(midia != null){
                             midia.imprimirMidia();

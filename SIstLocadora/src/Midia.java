@@ -1,7 +1,7 @@
 public class Midia {
     private int codigo;
     private String titulo, sinopse, genero;
-    private boolean dublado, disponibilidade;
+    private boolean dublado, disponibilidade = true;
     private double preco;
 
     public Midia(int codigo, String titulo, String sinopse, String genero,
@@ -12,7 +12,6 @@ public class Midia {
         this.genero = genero;
         this.dublado = dublado;
         this.preco = preco;
-        this.disponibilidade = true;
     }
 
     public Midia(){}
@@ -26,12 +25,12 @@ public class Midia {
         System.out.println("Gênero: " + this.genero);
 
         String temDublagem, taDisp;
-        if(dublado)
+        if(isDublado())
             temDublagem = "Sim";
         else
             temDublagem = "Não";
 
-        if(disponibilidade)
+        if(isDisponibilidade())
             taDisp = "Sim";
         else
             taDisp = "Não";
@@ -44,6 +43,10 @@ public class Midia {
 
     public boolean isDisponibilidade() {
         return disponibilidade;
+    }
+
+    public boolean isDublado() {
+        return dublado;
     }
 
     /* GET e SET */

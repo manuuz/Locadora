@@ -11,27 +11,48 @@ public class Locadora {
         this.midias = new ArrayList<>();
         this.emprestimos = new ArrayList<>();
 
+        cadastroAutomatico();
     }
 
     //TESTES
     public void cadastroAutomatico(){
         /*Clientes*/
         /*Pessoa Física*/
-        PessoaFisica pf1 = new PessoaFisica(0, "Emanuelle Maria", "Rua Capela",
+        PessoaFisica pf1 = new PessoaFisica(1, "Emanuelle Maria", "Rua Capela",
                 407, "Jd Riacho", "Contagem", "MG", "32241290",
-                998349599, 6, "150512526-05", "MG-160610");
+                998349599, 6, "150512526-05", "MG-16856052");
         adicionarCliente(pf1);
 
-        /*Pessoa Juridica*/
+        PessoaFisica pf2 = new PessoaFisica(2, "Francisco Junior", "Av Silva Lobo",
+                1001, "Caiçara", "BH", "MG", "200600300",
+                996959533, 3, "000000000-07", "MG-00000001");
+        adicionarCliente(pf2);
 
+        /*Pessoa Juridica*/
+        PessoaJuridica pj1 = new PessoaJuridica(1, "Empresa", "Rua da Bahia",
+                200, "Centro", "BH", "MG", "32200000",
+                990009000, 9, "00000000/0001-01", 963233500);
+        adicionarCliente(pj1);
 
         /*Midias*/
-        Midia m1 = new Midia(0, "Clube da Luta", "Filmes com críticas",
+        Midia m1 = new Midia(1, "Clube da Luta", "Filmes com críticas",
                 "Drama", true, 20.00);
         adicionarMidia(m1);
-        Midia m2 = new Midia(1, "Parasite", "Filmes ganhadores de Oscar",
+        Midia m2 = new Midia(2, "Parasite", "Filmes ganhadores de Oscar",
                 "Thriller", false, 17.00);
         adicionarMidia(m2);
+        Midia m3 = new Midia(3, "O Auto da Compadecida", "Filmes nacionais",
+                "Comédia", true, 11.00);
+        adicionarMidia(m3);
+
+        /*Empréstimo*/
+        ArrayList<Midia> MidiasExemplos = new ArrayList<>();
+        MidiasExemplos.add(m1);
+        MidiasExemplos.add(m2);
+
+        Emprestimo emp1 = new Emprestimo(0, pf1, MidiasExemplos, 2020, 11,
+                24, 37.00, 0, false);
+        adicionarEmprestimo(emp1);
     }
 
     /*Métodos de Impressão*/
@@ -46,7 +67,7 @@ public class Locadora {
     }
 
     public void imprimirSubMenu(String submenu){
-        System.out.println("++++++++++++++++" + submenu + "++++++++++++++++");
+        System.out.println("\n++++++++++++++++" + submenu + "++++++++++++++++");
         System.out.println("1 - Cadastrar");
         System.out.println("2 - Excluir");
         System.out.println("3 - Consultar");
@@ -71,7 +92,7 @@ public class Locadora {
     public void solicitacaoCliente(Cliente cliente){
         Scanner in = new Scanner(System.in);
 
-        int codigo = clientes.size()-1;
+        int codigo = clientes.get(this.clientes.size()-1).getCodigo()+1;
         cliente.setCodigo(codigo);
 
         System.out.println("Seu codigo é: " + codigo);
@@ -83,6 +104,9 @@ public class Locadora {
 
         System.out.println("Digite o número de seu logradouro: ");
         cliente.setNumeroCasa(in.nextInt());
+
+        //limpa buffer
+        in.nextLine();
 
         System.out.println("Digite seu Estado: ");
         cliente.setEstado(in.nextLine());
@@ -126,7 +150,7 @@ public class Locadora {
     //CLASSE PESSOA FÍSICA
     /*separei as pessoas fisicas das juridicas para consulta*/
     public ArrayList<PessoaFisica> getPessoaFisica(){
-        ArrayList<PessoaFisica> pessoasFisicas = new ArrayList();
+        ArrayList<PessoaFisica> pessoasFisicas = new ArrayList<>();
         for(Cliente cliente : clientes){
             if(cliente instanceof PessoaFisica){
                 pessoasFisicas.add((PessoaFisica) cliente);
@@ -160,10 +184,10 @@ public class Locadora {
         return null;
     }
 
-    /*CLASSE PESSOA JURÍDICA*/
+    //CLASSE PESSOA JURÍDICA
     /*separei as pessoas juridicas das fisicas para consulta*/
     public ArrayList<PessoaJuridica> getPessoaJuridica(){
-        ArrayList<PessoaJuridica> pessoasJuridicas = new ArrayList();
+        ArrayList<PessoaJuridica> pessoasJuridicas = new ArrayList<>();
         for(Cliente cliente : clientes){
             if(cliente instanceof PessoaJuridica){
                 pessoasJuridicas.add((PessoaJuridica) cliente);
@@ -224,7 +248,7 @@ public class Locadora {
         Midia m = new Midia();
         boolean tituloValido = false;
 
-        int codigo = midias.size() - 1;
+        int codigo = midias.get(this.clientes.size()-1).getCodigo()+1;
         m.setCodigo(codigo);
 
         System.out.println("O código dessa mídia é: " + codigo);
@@ -254,7 +278,8 @@ public class Locadora {
         m.setPreco(in.nextDouble());
 
         System.out.println("Mídia com dublagem? (s/n) ");
-        m.setDublado(in.nextLine().equalsIgnoreCase("s"));
+        if(in.nextLine().equalsIgnoreCase("s"))
+            m.setDublado(true);
 
         //limpar buffer
         in.nextLine();
@@ -263,9 +288,19 @@ public class Locadora {
     }
 
     /*consulta por titulo*/
+    public Midia consultaCodigoMidia(int codigo){
+        for(Midia m : midias){
+            if(m.getCodigo() == codigo){
+                return m;
+            }
+        }
+        return null;
+    }
+
+    /*consulta por titulo*/
     public Midia consultaTituloMidia(String titulo){
         for(Midia m : midias){
-            if(m.getTitulo().equals(titulo)){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
                 return m;
             }
         }
@@ -328,7 +363,7 @@ public class Locadora {
 
         do {
             do {
-                System.out.println("Escreva o título da mídia: ");
+                System.out.println("Escreva o código da mídia: ");
                 tituloMidia = in.nextLine();
 
                 midia = consultaTituloMidia(tituloMidia);
