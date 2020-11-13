@@ -23,14 +23,15 @@ public class Menu {
                     break;
 
                 case 3:
-                    /*submenuEmprestimo(locadora)*/
+                    submenuEmprestimo(locadora);
+                    break;
             }
         }while(opcao != 0);
 
     }
 
-    /* Códigos dos submenus */
-    /* CLASSE CLIENTE*/
+    // Códigos dos submenus
+    // CLASSE CLIENTE
     public static void submenuCliente(Locadora locadora){
         Scanner in = new Scanner(System.in);
         int opcao;
@@ -42,15 +43,17 @@ public class Menu {
             switch(opcao){
                 case 1:
                     submenuPessoaFisica(locadora);
+                    break;
 
                 case 2:
                     submenuPessoaJuridica(locadora);
+                    break;
             }
 
         }while(opcao != 0);
     }
 
-    /*CLASSE PESSOA FÍSICA*/
+    //CLASSE PESSOA FÍSICA
     public static void submenuPessoaFisica(Locadora locadora){
         Scanner in = new Scanner(System.in);
         int opcao;
@@ -142,7 +145,7 @@ public class Menu {
         }while(opcao != 0);
     }
 
-    /*CLASSE PESSOA JURÍDICA*/
+    //CLASSE PESSOA JURÍDICA
     public static void submenuPessoaJuridica(Locadora locadora){
         Scanner in = new Scanner(System.in);
         int opcao;
@@ -232,11 +235,10 @@ public class Menu {
         } while(opcao != 0);
     }
 
-    /*CLASSE MÍDIA*/
+    //CLASSE MÍDIA
     public static void submenuMidia(Locadora locadora){
         Scanner in = new Scanner(System.in);
         int opcao;
-        String titulo;
         Midia midia;
 
         do{
@@ -309,7 +311,7 @@ public class Menu {
                         System.out.println("Não há mídias cadastradas");
                     } else{
                         for(Midia m : locadora.getMidias()){
-                            System.out.println("");
+                            System.out.println();
                             m.imprimirMidia();
                         }
                     }
@@ -318,9 +320,96 @@ public class Menu {
         } while(opcao != 0);
     }
 
-    /*CLASSE EMPRÉSTIMO*/
+    //CLASSE EMPRÉSTIMO
     public static void submenuEmprestimo(Locadora locadora){
-        
+        Scanner in = new Scanner(System.in);
+        int opcao;
+        Emprestimo emprestimo;
+
+        do{
+            locadora.imprimirSubmenuEmprestimo();
+            opcao = in.nextInt();
+
+            switch (opcao){
+                case 1:
+                    //emprestimo
+                    /*verifica se há mídias cadastradas*/
+                    if(locadora.getMidias().isEmpty()){
+                        System.out.println("Não há mídias cadastradas para empréstimo");
+                    } else{
+                        System.out.println("\n++++++++++++++++ FAZER EMPRESTIMO ++++++++++++++++\n");
+                        Emprestimo novoEmprestimo = locadora.solicitacaoEmprestimo();
+
+                        if(novoEmprestimo != null){
+                          if(locadora.adicionarEmprestimo(novoEmprestimo)){
+                              System.out.println("Empréstimo realizado com sucesso!");
+                          } else{
+                              System.out.println("Erro ao realizar empréstimo");
+                          }
+                        } else {
+                            System.out.println("Erro ao realizar empréstimo");
+                        }
+                    }
+                    break;
+
+                case 2:
+                    //devolução
+                    if(locadora.getEmprestimos().isEmpty()){
+                        System.out.println("Não há empréstimos em aberto");
+                    } else{
+                        System.out.println("Digite o código do cliente: ");
+                        int codCliente = in.nextInt();
+                        emprestimo = locadora.consultaEmprestimos(codCliente);
+
+                        if(emprestimo != null){
+                            System.out.println("Emprestimo de: " );
+                            emprestimo.imprimirEmprestimo();
+
+                            if(!emprestimo.isDevolvido()){
+                                if(locadora.verificaMulta(emprestimo)){
+                                    System.out.println("Você possui  uma multa de R$" +
+                                            emprestimo.getMulta());
+                                    double somaTotal = emprestimo.getMulta() + emprestimo.getMulta();
+                                    System.out.println("Valor total: R$" + somaTotal);
+                                } else {
+                                    System.out.println("Valor total: R$" + emprestimo.getValor());
+                                }
+
+                                System.out.println("Confirmar devolução? (s/n)" );
+                                if(in.nextLine().equalsIgnoreCase("s")){
+                                    emprestimo.setDevolvido(true);
+                                    emprestimo.midiaDisp();
+
+                                    System.out.println("Devolução realizada com sucesso");
+                                } else{
+                                    System.out.println("Devolução já foi realizada anteriormente");
+                                }
+                            }
+                        }else {
+                            System.out.println("Empréstimo não encontrado");
+                        }
+                    }
+                    break;
+
+                case 3:
+                    //relatório
+                    if(locadora.getEmprestimos().isEmpty()){
+                        System.out.println("Não há empréstimos em aberto");
+                    } else {
+                        System.out.println("Digite o código do cliente: ");
+                        int codCliente = in.nextInt();
+
+                        for(Emprestimo e : locadora.getEmprestimos()){
+                            if(e.getCodCliente() == codCliente){
+                                System.out.println();
+                                e.imprimirEmprestimo();
+                            }
+                        }
+
+                    }
+            }
+        }
+        while(opcao != 0);
     }
 }
 

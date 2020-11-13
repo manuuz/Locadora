@@ -12,6 +12,7 @@ public class PessoaFisica extends Cliente{
 
     public PessoaFisica(){}
 
+
     /*Imprimir*/
     public void imprimirDadosPF(){
         super.imprimirDadosCliente();

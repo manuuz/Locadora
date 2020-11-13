@@ -42,6 +42,10 @@ public class Midia {
         System.out.println("+++++++++++++++++++++++++++++++");
     }
 
+    public boolean isDisponibilidade() {
+        return disponibilidade;
+    }
+
     /* GET e SET */
 
     public int getCodigo() {
@@ -66,6 +70,9 @@ public class Midia {
         this.genero = genero;
     }
 
+    public double getPreco() {
+        return preco;
+    }
     public void setPreco(double preco) {
         this.preco = preco;
     }
