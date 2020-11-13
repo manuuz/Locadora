@@ -15,6 +15,8 @@ public class Midia {
         this.disponibilidade = true;
     }
 
+    public Midia(){}
+
     /* Método de impressão de dados para relatório */
     public void imprimirMidia(){
         System.out.println("++++++++++++++++++++++++++++++++");
@@ -41,8 +43,35 @@ public class Midia {
     }
 
     /* GET e SET */
+
+    public int getCodigo() {
+        return codigo;
+    }
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
     public String getTitulo() {
         return titulo;
+    }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setDublado(boolean dublado) {
+        this.dublado = dublado;
     }
 
     public void setDisponibilidade(boolean disponibilidade) {
