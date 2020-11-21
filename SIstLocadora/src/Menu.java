@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// @author: EMANUELLE MARIA SOARES DE OLIVEIRA
 /* Classe Principal com menu e submenus */
 public class Menu {
     public static void main(String[] args) {
