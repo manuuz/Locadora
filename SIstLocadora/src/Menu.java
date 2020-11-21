@@ -326,26 +326,26 @@ public class Menu {
         int opcao;
         Emprestimo emprestimo;
 
-        do{
+        do {
             locadora.imprimirSubmenuEmprestimo();
             opcao = in.nextInt();
 
-            switch (opcao){
+            switch (opcao) {
                 case 1:
                     //emprestimo
                     /*verifica se há mídias cadastradas*/
-                    if(locadora.getMidias().isEmpty()){
+                    if (locadora.getMidias().isEmpty()) {
                         System.out.println("Não há mídias cadastradas para empréstimo");
-                    } else{
+                    } else {
                         System.out.println("\n++++++++++++++++ FAZER EMPRESTIMO ++++++++++++++++\n");
                         Emprestimo novoEmprestimo = locadora.solicitacaoEmprestimo();
 
-                        if(novoEmprestimo != null){
-                          if(locadora.adicionarEmprestimo(novoEmprestimo)){
-                              System.out.println("Empréstimo realizado com sucesso!");
-                          } else{
-                              System.out.println("Erro ao realizar empréstimo");
-                          }
+                        if (novoEmprestimo != null) {
+                            if (locadora.adicionarEmprestimo(novoEmprestimo)) {
+                                System.out.println("Empréstimo realizado com sucesso!");
+                            } else {
+                                System.out.println("Erro ao realizar empréstimo");
+                            }
                         } else {
                             System.out.println("Erro ao realizar empréstimo");
                         }
@@ -354,60 +354,58 @@ public class Menu {
 
                 case 2:
                     //devolução
-                    if(locadora.getEmprestimos().isEmpty()){
+                    if (locadora.getEmprestimos().isEmpty()) {
                         System.out.println("Não há empréstimos em aberto");
-                    } else{
+                    } else {
                         System.out.println("Digite o código do cliente: ");
                         int codCliente = in.nextInt();
                         emprestimo = locadora.consultaEmprestimos(codCliente);
 
-                        if(emprestimo != null){
-                            System.out.println("Emprestimo de: " );
+                        //limpar buffer
+                        in.nextLine();
+
+                        if (emprestimo != null) {
                             emprestimo.imprimirEmprestimo();
 
-                            if(!emprestimo.isDevolvido()){
-                                if(locadora.verificaMulta(emprestimo)){
-                                    System.out.println("Você possui  uma multa de R$" +
-                                            emprestimo.getMulta());
-                                    double somaTotal = emprestimo.getMulta() + emprestimo.getMulta();
-                                    System.out.println("Valor total: R$" + somaTotal);
-                                } else {
-                                    System.out.println("Valor total: R$" + emprestimo.getValor());
-                                }
+                            if (emprestimo.isDevolvido()) {
+                                System.out.println("Emprestimo devolvido anteriormente");
+                            } else {
+                                System.out.println("Confirmar devolução? (s/n)");
+                                String resposta = in.nextLine();
 
-                                System.out.println("Confirmar devolução? (s/n)" );
-                                if(in.nextLine().equalsIgnoreCase("s")){
+                                if (resposta.equalsIgnoreCase("s")) {
                                     emprestimo.setDevolvido(true);
                                     emprestimo.midiaDisp();
 
                                     System.out.println("Devolução realizada com sucesso");
-                                } else{
-                                    System.out.println("Devolução já foi realizada anteriormente");
+                                } else {
+                                    System.out.println("Devolução cancelada");
                                 }
                             }
-                        }else {
-                            System.out.println("Empréstimo não encontrado");
+                        } else {
+                            System.out.println("Emprestimo não encontrado");
                         }
                     }
                     break;
 
                 case 3:
                     //relatório
-                    if(locadora.getEmprestimos().isEmpty()){
+                    if (locadora.getEmprestimos().isEmpty()) {
                         System.out.println("Não há empréstimos em aberto");
                     } else {
                         System.out.println("Digite o código do cliente: ");
                         int codCliente = in.nextInt();
 
-                        for(Emprestimo e : locadora.getEmprestimos()){
-                            if(e.getCodCliente() == codCliente){
+                        for (Emprestimo e : locadora.getEmprestimos()) {
+                            if (e.getCodCliente() == codCliente) {
                                 System.out.println();
                                 e.imprimirEmprestimo();
                             }
                         }
 
                     }
-            }
+                    break;
+                }
         }
         while(opcao != 0);
     }

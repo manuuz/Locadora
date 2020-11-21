@@ -37,7 +37,7 @@ public class Cliente {
         System.out.println("Mídias máximas por empréstimo: " + this.midiasMax);
     }
 
-    /* GET e SET */
+    // GET e SET
     public int getCodigo() {
         return codigo;
     }

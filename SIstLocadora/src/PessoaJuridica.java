@@ -20,7 +20,7 @@ public class PessoaJuridica extends Cliente {
         System.out.println("IE: " + this.IE);
     }
 
-    /*GET E SET*/
+    //GET E SET
 
     public void setCNPJ(String CNPJ) {
         this.CNPJ = CNPJ;

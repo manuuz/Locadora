@@ -49,7 +49,7 @@ public class Midia {
         return dublado;
     }
 
-    /* GET e SET */
+    // GET e SET
 
     public int getCodigo() {
         return codigo;

@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Emprestimo {
@@ -20,6 +22,7 @@ public class Emprestimo {
         this.devolvido = devolvido;
 
         midiaIndisp();
+        calculoMulta();
     }
 
     /* iniciador de valores facultativos */
@@ -35,11 +38,21 @@ public class Emprestimo {
         System.out.println("Data: " + this.dia + "/" + this.mes + "/" + this.ano);
         System.out.println("Código do cliente: " + cliente.getCodigo());
         System.out.println("Nome do cliente: " + cliente.getNome());
-        System.out.println("Todas mídias alugadas: " + cliente.getCodigo());
+        System.out.println("Todas mídias alugadas: ");
         for(Midia midia : midias){
             System.out.println("    Título: " + midia.getTitulo());
         }
-        System.out.println("+++++++++++++++++++++++++++++++");
+        System.out.println("Multa: " + this.multa);
+        System.out.println("Valor total: " + (this.valor + this.multa));
+        String devolvido;
+
+        if(isDevolvido()){
+            devolvido = "Sim";
+        } else{
+            devolvido = "Não";
+        }
+
+        System.out.println("Devolução feita: " + devolvido);
     }
 
     /* Mudança de disponibilidade da mídia */
@@ -49,18 +62,21 @@ public class Emprestimo {
         }
     }
 
-    /* Mudança de disponibilidade dda mídia*/
+    /* Mudança de disponibilidade da mídia*/
     public void midiaDisp(){
         for(Midia midia : midias){
             midia.setDisponibilidade(true);
         }
     }
 
-    /* Cálculo de possível multa -- WIP */
+    /* Cálculo de possível multa */
     public void calculoMulta(){
-        if(!devolvido){
-            multa = 0;
-            /* TO DO */
+        if(!isDevolvido()){
+            LocalDate dataEmprestimo = LocalDate.of(ano, mes, dia);
+            LocalDate dataHoje = LocalDate.now();
+
+            long diferencaSemanas = dataEmprestimo.until(dataHoje, ChronoUnit.WEEKS);
+            this.multa = 0.1*diferencaSemanas*valor;
         }
     }
 
@@ -75,10 +91,6 @@ public class Emprestimo {
     }
     public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
     }
 
     public void setCliente(Cliente cliente) {

@@ -18,15 +18,12 @@ public class Locadora {
     public void cadastroAutomatico(){
         /*Clientes*/
         /*Pessoa Física*/
+
+        /*Aluna*/
         PessoaFisica pf1 = new PessoaFisica(1, "Emanuelle Maria", "Rua Capela",
                 407, "Jd Riacho", "Contagem", "MG", "32241290",
                 998349599, 6, "150512526-05", "MG-16856052");
         adicionarCliente(pf1);
-
-        PessoaFisica pf2 = new PessoaFisica(2, "Francisco Junior", "Av Silva Lobo",
-                1001, "Caiçara", "BH", "MG", "200600300",
-                996959533, 3, "000000000-07", "MG-00000001");
-        adicionarCliente(pf2);
 
         /*Pessoa Juridica*/
         PessoaJuridica pj1 = new PessoaJuridica(1, "Empresa", "Rua da Bahia",
@@ -51,13 +48,13 @@ public class Locadora {
         MidiasExemplos.add(m2);
 
         Emprestimo emp1 = new Emprestimo(0, pf1, MidiasExemplos, 2020, 11,
-                24, 37.00, 0, false);
+                20, 37.00, 0, false);
         adicionarEmprestimo(emp1);
     }
 
     /*Métodos de Impressão*/
     public void imprimirMenu(){
-        System.out.println("\n++++++++++++++++ LOCADORA ++++++++++++++++\n");
+        System.out.println("\n++++++++++++++++ LOCADORA ++++++++++++++++");
         System.out.println("1 - Cliente");
         System.out.println("2 - Mídia");
         System.out.println("3 - Empréstimo");
@@ -149,15 +146,6 @@ public class Locadora {
 
     //CLASSE PESSOA FÍSICA
     /*separei as pessoas fisicas das juridicas para consulta*/
-    public ArrayList<PessoaFisica> getPessoaFisica(){
-        ArrayList<PessoaFisica> pessoasFisicas = new ArrayList<>();
-        for(Cliente cliente : clientes){
-            if(cliente instanceof PessoaFisica){
-                pessoasFisicas.add((PessoaFisica) cliente);
-            }
-        }
-        return pessoasFisicas;
-    }
 
     /*solicitação de dados*/
     public PessoaFisica solicitacaoPF(){
@@ -186,15 +174,6 @@ public class Locadora {
 
     //CLASSE PESSOA JURÍDICA
     /*separei as pessoas juridicas das fisicas para consulta*/
-    public ArrayList<PessoaJuridica> getPessoaJuridica(){
-        ArrayList<PessoaJuridica> pessoasJuridicas = new ArrayList<>();
-        for(Cliente cliente : clientes){
-            if(cliente instanceof PessoaJuridica){
-                pessoasJuridicas.add((PessoaJuridica) cliente);
-            }
-        }
-        return pessoasJuridicas;
-    }
 
     /*solicitação de dados*/
     public PessoaJuridica solicitacaoPJ(){
@@ -248,7 +227,7 @@ public class Locadora {
         Midia m = new Midia();
         boolean tituloValido = false;
 
-        int codigo = midias.get(this.clientes.size()-1).getCodigo()+1;
+        int codigo = midias.get(this.midias.size()-1).getCodigo()+1;
         m.setCodigo(codigo);
 
         System.out.println("O código dessa mídia é: " + codigo);
@@ -310,7 +289,7 @@ public class Locadora {
     //CLASE EMPRESTIMO
     /*imprime submenu*/
     public void imprimirSubmenuEmprestimo(){
-        System.out.println("++++++++++++++++ Emprestimo ++++++++++++++++");
+        System.out.println("\n++++++++++++++++ Emprestimo ++++++++++++++++");
             System.out.println("1 - Empréstimo");
             System.out.println("2 - Devolução");
             System.out.println("3 - Imprimir Relatório");
@@ -443,6 +422,26 @@ public class Locadora {
 
     public ArrayList<Emprestimo> getEmprestimos() {
         return emprestimos;
+    }
+
+    public ArrayList<PessoaFisica> getPessoaFisica(){
+        ArrayList<PessoaFisica> pessoasFisicas = new ArrayList<>();
+        for(Cliente cliente : clientes){
+            if(cliente instanceof PessoaFisica){
+                pessoasFisicas.add((PessoaFisica) cliente);
+            }
+        }
+        return pessoasFisicas;
+    }
+
+    public ArrayList<PessoaJuridica> getPessoaJuridica(){
+        ArrayList<PessoaJuridica> pessoasJuridicas = new ArrayList<>();
+        for(Cliente cliente : clientes){
+            if(cliente instanceof PessoaJuridica){
+                pessoasJuridicas.add((PessoaJuridica) cliente);
+            }
+        }
+        return pessoasJuridicas;
     }
 }
 

@@ -20,7 +20,7 @@ public class PessoaFisica extends Cliente{
         System.out.println("RG: " + this.RG);
     }
 
-    /*GET E SET*/
+    //GET E SET
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
