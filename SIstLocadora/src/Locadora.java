@@ -21,8 +21,8 @@ public class Locadora {
 
         /*Aluna*/
         PessoaFisica pf1 = new PessoaFisica(1, "Emanuelle Maria", "Rua Capela",
-                407, "Jd Riacho", "Contagem", "MG", "32241290",
-                998349599, 6, "150512526-05", "MG-16856052");
+                407, "Jd Riacho", "Contagem", "MG", "32240000",
+                998349599, 6, "150000001-05", "MG-16800000");
         adicionarCliente(pf1);
 
         /*Pessoa Juridica*/
